@@ -1,17 +1,32 @@
-const express = require('express')
+const express = require("express");
+require("dotenv").config();
+const commentRoutes = require("./routes/commentsRouter.js");
+
+const mongoose = require("mongoose");
+
+//express app
 const app = express();
-const cors = require('cors');
-const port = 3000;
 
-app.use(express.json())
-app.use(cors())
+//middleware
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
-app.get('/', function (req,res) {
-    res.send({"msg":'hello world'})
-})
+//routes
+app.use("/api/comments", commentRoutes);
 
-app.post('/', function (req,res) {
-    res.send(req.body)
-})
-
-app.listen(port, () => console.log("działa"));
+//connect to db
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    //listener
+    app.listen(process.env.PORT || 4000, () => {
+      console.log("działa :)");
+    });
+  })
+  .catch((err) => {
+    console.log("nie działa :(");
+    console.log(err);
+  });
