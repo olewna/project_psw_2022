@@ -24,6 +24,7 @@ function App() {
 
   return (
     <div className="App">
+      <div>Comments</div>
       {!loading &&
         coms.map((com) => (
           <div key={com.id}>
