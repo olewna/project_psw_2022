@@ -4,12 +4,16 @@ const {
   createFood,
   deleteFood,
   updateFood,
+  getSearchedFood,
 } = require("../controllers/foodController.js");
 
 const router = express.Router();
 
 //GET all food
 router.get("/", getFood);
+
+//GET searched
+router.get("/:nazwa", getSearchedFood);
 
 // POST new Food
 router.post("/", createFood);

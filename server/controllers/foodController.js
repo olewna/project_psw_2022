@@ -7,6 +7,20 @@ const getFood = async (req, res) => {
   res.status(200).json(food);
 };
 
+//GET searched
+const getSearchedFood = async (req, res) => {
+  const { nazwa } = req.params;
+
+  if (/^[A-Za-z0-9]*$/.test(nazwa)) {
+    const food = await Food.find({ name: { $regex: nazwa } });
+    if (!food) {
+      res.status(200).json({});
+    } else {
+      res.status(200).json(food);
+    }
+  }
+};
+
 //POST new
 const createFood = async (req, res) => {
   const { name, telephone, id, company } = req.body;
@@ -58,4 +72,5 @@ module.exports = {
   createFood,
   deleteFood,
   updateFood,
+  getSearchedFood,
 };
