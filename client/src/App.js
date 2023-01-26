@@ -3,6 +3,7 @@ import { useStore } from "./context/StoreProvider.js";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home.js";
 import Food from "./components/Food.js";
+import FoodEdit from "./components/FoodEdit.js";
 import Music from "./components/Music.js";
 import Games from "./components/Games.js";
 import Navbar from "./components/Navbar.js";
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/food" element={<Food />} />
+        <Route path="/food/:id/edit" element={<FoodEdit />} />
         <Route path="/music" element={<Music />} />
         <Route path="/games" element={<Games />} />
         <Route path="/login" element={<Account />} />

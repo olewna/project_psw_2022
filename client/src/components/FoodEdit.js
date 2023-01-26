@@ -1,66 +1,46 @@
-import React, { useState } from "react";
-import { useStore } from "../context/StoreProvider";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useStore } from "../context/StoreProvider";
 import axios from "axios";
 
-export default function Food() {
-  const { food, logged, setFood } = useStore();
+export default function FoodEdit() {
+  const { id } = useParams();
+  const { logged, setFood, food, loading } = useStore();
   const [errorMsg, setErrorMsg] = useState(null);
-
-  const handleDelete = async (id) => {
-    axios
-      .delete(`/api/food/${id}`)
-      .then((res) => console.log("food deleted"))
-      .catch((err) => console.error(err));
-    await setFood((x) => x.filter((f) => f.id !== id));
-  };
+  const [currentFood, setCurrentFood] = useState(
+    !loading && food.filter((f) => f.id === id)[0]
+  );
 
   const handleSubmit = async (val) => {
     axios
-      .post("/api/food", val)
-      .then((res) => console.log("food posted") && setErrorMsg(null))
+      .patch(`/api/food/${id}`, val)
+      .then((res) => console.log("food patched") && setErrorMsg(null))
       .catch((err) => setErrorMsg(err));
-    await setFood((prev) => [...prev, val]);
+    await setFood((prev) =>
+      prev.map((f) => {
+        if (f.id === id) {
+          return val;
+        } else return f;
+      })
+    );
   };
+
+  useEffect(() => {
+    setCurrentFood(!loading && food.filter((f) => f.id === id)[0]);
+  }, [food]);
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      company: "",
-      telephone: "",
-      id: uuidv4(),
+      name: !loading && currentFood.name,
+      company: !loading && currentFood.company,
+      telephone: !loading && currentFood.telephone,
+      id: id,
     },
     onSubmit: (values) => {
       handleSubmit(values);
-      formik.resetForm({
-        name: "",
-        company: "",
-        telephone: "",
-        id: uuidv4(),
-      });
     },
   });
-
-  const foodList =
-    food !== null &&
-    food.map((f) => (
-      <div className="my-2 " key={f.id}>
-        {f.name} from {f.company}. Call {f.telephone}.
-        <button
-          onClick={() => handleDelete(f.id)}
-          className="btn btn-dark mx-2"
-        >
-          Delete
-        </button>
-        {logged.type === "admin" ? (
-          <Link to={`/food/${f.id}/edit`} className="btn btn-dark">
-            Edit
-          </Link>
-        ) : null}
-      </div>
-    ));
   return (
     <div>
       {logged.type === "admin" ? (
@@ -95,13 +75,14 @@ export default function Food() {
             </div>
             <div>{errorMsg}</div>
             <button type="submit" className="btn btn-dark my-3 d-block mx-auto">
-              ADD FOOD
+              UPDATE FOOD
             </button>
           </div>
         </form>
       ) : null}
-      <h2>Food:</h2>
-      {foodList}
+      <Link to="/food" className="btn btn-dark my-3 d-block mx-auto w-25">
+        Back
+      </Link>
     </div>
   );
 }
