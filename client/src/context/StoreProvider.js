@@ -11,6 +11,7 @@ export function StoreProvider({ children }) {
   const [food, setFood] = useState(null);
   const [comments, setComments] = useState(null);
   const [music, setMusic] = useState(null);
+  const [games, setGames] = useState(null);
 
   return (
     <StoreContext.Provider
@@ -21,6 +22,8 @@ export function StoreProvider({ children }) {
         setComments,
         music,
         setMusic,
+        games,
+        setGames,
       }}
     >
       {children}
