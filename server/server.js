@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const commentRoutes = require("./routes/commentsRouter.js");
 const foodRoutes = require("./routes/foodRouter.js");
+const musicRoutes = require("./routes/musicRouter");
 
 const mongoose = require("mongoose");
 
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 //routes
 app.use("/api/comments", commentRoutes);
 app.use("/api/food", foodRoutes);
+app.use("/api/music", musicRoutes);
 
 //connect to db
 mongoose

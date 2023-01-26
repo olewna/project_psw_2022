@@ -14,6 +14,11 @@ export default function Navbar() {
               FOOD
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/music" className="btn btn-dark">
+              MUSIC
+            </Link>
+          </li>
           {/* <li className="nav-item">
             <Link to="/login" className="btn btn-dark">
               {logged.type === "" ? <div>Log in</div> : <div>Account</div>}
