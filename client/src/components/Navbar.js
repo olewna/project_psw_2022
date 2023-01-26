@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../context/StoreProvider";
 
 export default function Navbar() {
+  const { logged } = useStore();
   return (
     <nav className="navbar navbar-expand navbar-dark p-3 mb-3 bg-dark">
       <div className="container-fluid">
@@ -24,11 +26,11 @@ export default function Navbar() {
               GAMES
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link to="/login" className="btn btn-dark">
               {logged.type === "" ? <div>Log in</div> : <div>Account</div>}
             </Link>
-          </li> */}
+          </li>
         </ul>
       </div>
     </nav>

@@ -8,10 +8,16 @@ export function useStore() {
 
 export function StoreProvider({ children }) {
   //login
+  const [loading, setLoading] = useState(true);
   const [food, setFood] = useState(null);
   const [comments, setComments] = useState(null);
   const [music, setMusic] = useState(null);
   const [games, setGames] = useState(null);
+  const [users, setUsers] = useState(null);
+  const [logged, setLogged] = useState({
+    nickname: "",
+    type: "",
+  });
 
   return (
     <StoreContext.Provider
@@ -24,6 +30,12 @@ export function StoreProvider({ children }) {
         setMusic,
         games,
         setGames,
+        users,
+        setUsers,
+        logged,
+        setLogged,
+        loading,
+        setLoading,
       }}
     >
       {children}

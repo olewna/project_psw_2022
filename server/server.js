@@ -4,6 +4,7 @@ const commentRoutes = require("./routes/commentsRouter.js");
 const foodRoutes = require("./routes/foodRouter.js");
 const musicRoutes = require("./routes/musicRouter");
 const gamesRoutes = require("./routes/gamesRouter");
+const userRoutes = require("./routes/usersRouter");
 
 const mongoose = require("mongoose");
 
@@ -22,6 +23,7 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/music", musicRoutes);
 app.use("/api/games", gamesRoutes);
+app.use("/api/users", userRoutes);
 
 //connect to db
 mongoose

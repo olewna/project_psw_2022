@@ -2,16 +2,15 @@ import React from "react";
 import { useStore } from "../context/StoreProvider";
 
 export default function Home() {
-  const { food, music, games } = useStore();
+  const { food, music, games, loading } = useStore();
 
-  const todayFood =
-    food !== null && food[Math.floor(Math.random() * food.length)];
+  const todayFood = !loading && food[Math.floor(Math.random() * food.length)];
 
   const todayMusic =
-    music !== null && music[Math.floor(Math.random() * music.length)];
+    !loading && music[Math.floor(Math.random() * music.length)];
 
   const todayGames =
-    games !== null && games[Math.floor(Math.random() * games.length)];
+    !loading && games[Math.floor(Math.random() * games.length)];
 
   return (
     <div>
