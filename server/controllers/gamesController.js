@@ -7,6 +7,20 @@ const getGames = async (req, res) => {
   res.status(200).json(games);
 };
 
+//GET searched
+const getSearchedGames = async (req, res) => {
+  const { nazwa } = req.params;
+
+  if (/^[A-Za-z0-9]*$/.test(nazwa)) {
+    const games = await Games.find({ name: { $regex: nazwa } });
+    if (!games) {
+      res.status(200).json({});
+    } else {
+      res.status(200).json(games);
+    }
+  }
+};
+
 //POST new
 const createGames = async (req, res) => {
   const { name, type, price, id } = req.body;
@@ -58,4 +72,5 @@ module.exports = {
   createGames,
   deleteGames,
   updateGames,
+  getSearchedGames,
 };

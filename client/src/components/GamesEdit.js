@@ -4,37 +4,40 @@ import { useParams, Link } from "react-router-dom";
 import { useStore } from "../context/StoreProvider";
 import axios from "axios";
 
-export default function FoodEdit() {
+export default function GamesEdit() {
   const { id } = useParams();
-  const { logged, setFood, food, loading } = useStore();
+  const { logged, setGames, games, loading } = useStore();
   const [errorMsg, setErrorMsg] = useState(null);
-  const [currentFood, setCurrentFood] = useState(
-    !loading && food.filter((f) => f.id === id)[0]
+  const [currentGame, setCurrentGame] = useState(
+    !loading && games.filter((g) => g.id === id)[0]
   );
 
   const handleSubmit = async (val) => {
     axios
-      .patch(`/api/food/${id}`, val)
-      .then((res) => console.log("food patched") && setErrorMsg(null))
+      .patch(`/api/games/${id}`, val)
+      .then((res) => {
+        console.log("game patched");
+        setErrorMsg("Updated!");
+      })
       .catch((err) => setErrorMsg(err));
-    await setFood((prev) =>
-      prev.map((f) => {
-        if (f.id === id) {
+    await setGames((prev) =>
+      prev.map((g) => {
+        if (g.id === id) {
           return val;
-        } else return f;
+        } else return g;
       })
     );
   };
 
   useEffect(() => {
-    setCurrentFood(!loading && food.filter((f) => f.id === id)[0]);
-  }, [food, loading, id]);
+    setCurrentGame(!loading && games.filter((g) => g.id === id)[0]);
+  }, [games, loading, id]);
 
   const formik = useFormik({
     initialValues: {
-      name: !loading && currentFood.name,
-      company: !loading && currentFood.company,
-      telephone: !loading && currentFood.telephone,
+      name: !loading && currentGame.name,
+      type: !loading && currentGame.type,
+      price: !loading && currentGame.price,
       id: id,
     },
     onSubmit: (values) => {
@@ -46,30 +49,29 @@ export default function FoodEdit() {
       <div className="row">
         {logged.type === "admin" ? (
           <form className="form" onSubmit={formik.handleSubmit}>
-            <div className="foods">
+            <div className="games">
               <div className="d-flex flex-column justify-content-center align-items-center">
                 <input
                   className="form-control my-3 w-50"
                   name="name"
-                  placeholder="food..."
+                  placeholder="game..."
                   value={formik.values.name}
                   required
                   onChange={formik.handleChange}
                 />
                 <input
-                  name="company"
+                  name="type"
                   className="form-control my-3 w-50"
-                  placeholder="company..."
-                  value={formik.values.company}
+                  placeholder="type..."
+                  value={formik.values.type}
                   required
                   onChange={formik.handleChange}
                 />
                 <input
                   className="form-control my-3 w-50"
-                  name="telephone"
-                  placeholder="telephone number..."
-                  value={formik.values.telephone}
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+                  name="price"
+                  placeholder="price of this game..."
+                  value={formik.values.price}
                   required
                   onChange={formik.handleChange}
                 />
@@ -79,12 +81,12 @@ export default function FoodEdit() {
                 type="submit"
                 className="btn btn-dark my-3 d-block mx-auto"
               >
-                UPDATE FOOD
+                UPDATE GAME
               </button>
             </div>
           </form>
         ) : null}
-        <Link to="/food" className="btn btn-dark my-3 d-block mx-auto w-25">
+        <Link to="/games" className="btn btn-dark my-3 d-block mx-auto w-25">
           Back
         </Link>
       </div>

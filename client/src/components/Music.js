@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../context/StoreProvider";
 
-export default function Food() {
+export default function Music() {
   const { music } = useStore();
   const musicList =
     music !== null ? (
@@ -14,9 +14,11 @@ export default function Food() {
       <div>Loading...</div>
     );
   return (
-    <div>
-      <h2>Music:</h2>
-      {musicList}
+    <div className="container">
+      <div className="row">
+        <h2>Music:</h2>
+        {musicList}
+      </div>
     </div>
   );
 }

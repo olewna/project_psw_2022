@@ -13,7 +13,7 @@ export default function Home() {
     !loading && games[Math.floor(Math.random() * games.length)];
 
   return (
-    <div>
+    <div className="d-flex flex-column justify-content-center align-items-center">
       <h1>Your combo for today:</h1>
       <div>Food: {todayFood.name}</div>
       <div>Playlist: {todayMusic.name}</div>

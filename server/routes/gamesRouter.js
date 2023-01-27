@@ -4,12 +4,16 @@ const {
   createGames,
   deleteGames,
   updateGames,
+  getSearchedGames,
 } = require("../controllers/gamesController.js");
 
 const router = express.Router();
 
 //GET all games
 router.get("/", getGames);
+
+// GET searched
+router.get("/:nazwa", getSearchedGames);
 
 // POST new games
 router.post("/", createGames);

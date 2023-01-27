@@ -65,19 +65,24 @@ export default function Food() {
   const foodList =
     showed !== null ? (
       showed.map((f) => (
-        <div className="my-2 " key={f.id}>
+        <div
+          className="my-2 d-flex justify-content-between align-items-center"
+          key={f.id}
+        >
           {f.name} from {f.company}. Call {f.telephone}.
-          <button
-            onClick={() => handleDelete(f.id)}
-            className="btn btn-dark mx-2"
-          >
-            Delete
-          </button>
-          {logged.type === "admin" ? (
-            <Link to={`/food/${f.id}/edit`} className="btn btn-dark">
-              Edit
-            </Link>
-          ) : null}
+          <div>
+            <button
+              onClick={() => handleDelete(f.id)}
+              className="btn btn-dark mx-2"
+            >
+              Delete
+            </button>
+            {logged.type === "admin" ? (
+              <Link to={`/food/${f.id}/edit`} className="btn btn-dark">
+                Edit
+              </Link>
+            ) : null}
+          </div>
         </div>
       ))
     ) : (
@@ -85,59 +90,67 @@ export default function Food() {
     );
 
   return (
-    <div>
-      {logged.type === "admin" ? (
-        <form className="form" onSubmit={formik.handleSubmit}>
-          <div className="foods">
-            <div className="food">
-              <input
-                className="form-control my-3"
-                name="name"
-                placeholder="food..."
-                value={formik.values.name}
-                required
-                onChange={formik.handleChange}
-              />
-              <input
-                name="company"
-                className="form-control my-3"
-                placeholder="company..."
-                value={formik.values.company}
-                required
-                onChange={formik.handleChange}
-              />
-              <input
-                className="form-control my-3"
-                name="telephone"
-                placeholder="telephone number..."
-                value={formik.values.telephone}
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
-                required
-                onChange={formik.handleChange}
-              />
+    <div className="container">
+      <div className="row">
+        {logged.type === "admin" ? (
+          <form className="form" onSubmit={formik.handleSubmit}>
+            <div className="foods">
+              <div className="d-flex justify-content-center flex-column align-items-center">
+                <input
+                  className="form-control my-3 w-50"
+                  name="name"
+                  placeholder="food..."
+                  value={formik.values.name}
+                  required
+                  onChange={formik.handleChange}
+                />
+                <input
+                  name="company"
+                  className="form-control my-3 w-50"
+                  placeholder="company..."
+                  value={formik.values.company}
+                  required
+                  onChange={formik.handleChange}
+                />
+                <input
+                  className="form-control my-3 w-50"
+                  name="telephone"
+                  placeholder="telephone number..."
+                  value={formik.values.telephone}
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+                  required
+                  onChange={formik.handleChange}
+                />
+              </div>
+              <div>{errorMsg}</div>
+              <button
+                type="submit"
+                className="btn btn-dark my-3 d-block mx-auto"
+              >
+                ADD FOOD
+              </button>
             </div>
-            <div>{errorMsg}</div>
-            <button type="submit" className="btn btn-dark my-3 d-block mx-auto">
-              ADD FOOD
-            </button>
-          </div>
+          </form>
+        ) : null}
+        <form
+          className="form d-flex justify-content-center mt-4 mb-2"
+          onSubmit={formikS.handleSubmit}
+        >
+          <input
+            name="search"
+            type="text"
+            className="form-control w-50"
+            placeholder="Search your favorite food..."
+            value={formikS.values.search}
+            onChange={formikS.handleChange}
+          />
+          <button type="submit" className="btn btn-dark">
+            Search
+          </button>
         </form>
-      ) : null}
-      <form className="form d-flex" onSubmit={formikS.handleSubmit}>
-        <input
-          name="search"
-          type="text"
-          className="form-control"
-          placeholder="Search your favorite food..."
-          value={formikS.values.search}
-          onChange={formikS.handleChange}
-        />
-        <button type="submit" className="btn btn-dark">
-          Search
-        </button>
-      </form>
-      <h2>Food:</h2>
-      {foodList}
+        <h2 className="text-center my-4">Food:</h2>
+        {foodList}
+      </div>
     </div>
   );
 }
