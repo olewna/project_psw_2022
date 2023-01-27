@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useStore } from "../context/StoreProvider.js";
+import { sha256 } from "js-sha256";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -28,7 +29,8 @@ export default function Login() {
     onSubmit: (values) => {
       const acc = users.filter(
         (user) =>
-          user.name === values.nickname && user.password === values.password
+          user.name === values.nickname &&
+          user.password === sha256(values.password)
       );
       if (acc.length === 1) {
         setErrorMsg(null);
