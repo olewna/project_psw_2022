@@ -1,5 +1,6 @@
 import React from "react";
 import { useStore } from "../context/StoreProvider";
+import Comments from "./Comments";
 
 export default function Home() {
   const { food, music, games, loading } = useStore();
@@ -13,11 +14,19 @@ export default function Home() {
     !loading && games[Math.floor(Math.random() * games.length)];
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
-      <h1>Your combo for today:</h1>
-      <div>Food: {todayFood.name}</div>
-      <div>Playlist: {todayMusic.name}</div>
-      <div>Games: {todayGames.name}</div>
+    <div className="container">
+      <div className="row">
+        <div className="col-12 col-lg-7 d-flex flex-column pt-5 mt-5 align-items-center">
+          <div className="h1 my-5 text-info">Your combo for today:</div>
+          <div className="h1 text-warning">Food: {todayFood.name}</div>
+          <div className="h1 text-success">Playlist: {todayMusic.name}</div>
+          <div className="h1 text-danger">Game: {todayGames.name}</div>
+        </div>
+        <div className="col-12 col-lg-5">
+          <h2 className="text-center">Comments:</h2>
+          <Comments />
+        </div>
+      </div>
     </div>
   );
 }
