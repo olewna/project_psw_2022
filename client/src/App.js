@@ -6,6 +6,7 @@ import FoodEdit from "./components/FoodEdit.js";
 import Games from "./components/Games.js";
 import GamesEdit from "./components/GamesEdit.js";
 import Music from "./components/Music.js";
+import MusicEdit from "./components/MusicEdit.js";
 import Navbar from "./components/Navbar.js";
 import Account from "./components/Account.js";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/games" element={<Games />} />
         <Route path="/games/:id/edit" element={<GamesEdit />} />
         <Route path="/music" element={<Music />} />
+        <Route path="/music/:id/edit" element={<MusicEdit />} />
         <Route path="/login" element={<Account />} />
       </Routes>
     </div>

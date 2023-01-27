@@ -19,13 +19,16 @@ export default function Games() {
       .delete(`/api/games/${id}`)
       .then((res) => console.log("game deleted"))
       .catch((err) => console.error(err));
-    await setGames((x) => x.filter((f) => f.id !== id));
+    await setGames((x) => x.filter((g) => g.id !== id));
   };
 
   const handleSubmit = async (val) => {
     axios
       .post("/api/games", val)
-      .then((res) => console.log("game posted") && setErrorMsg(null))
+      .then((res) => {
+        console.log("game posted");
+        setErrorMsg(null);
+      })
       .catch((err) => setErrorMsg(err));
     await setGames((prev) => [...prev, val]);
   };
@@ -121,7 +124,7 @@ export default function Games() {
                   onChange={formik.handleChange}
                 />
               </div>
-              <div>{errorMsg}</div>
+              <div className="text-center">{errorMsg}</div>
               <button
                 type="submit"
                 className="btn btn-dark my-3 d-block mx-auto"

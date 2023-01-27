@@ -122,7 +122,7 @@ export default function Food() {
                   onChange={formik.handleChange}
                 />
               </div>
-              <div>{errorMsg}</div>
+              <div className="text-center">{errorMsg}</div>
               <button
                 type="submit"
                 className="btn btn-dark my-3 d-block mx-auto"

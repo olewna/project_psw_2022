@@ -7,6 +7,20 @@ const getMusic = async (req, res) => {
   res.status(200).json(music);
 };
 
+// GET searched
+const getSearchedMusic = async (req, res) => {
+  const { nazwa } = req.params;
+
+  if (/^[A-Za-z0-9]*$/.test(nazwa)) {
+    const music = await Music.find({ name: { $regex: nazwa } });
+    if (!music) {
+      res.status(200).json({});
+    } else {
+      res.status(200).json(music);
+    }
+  }
+};
+
 //POST new
 const createMusic = async (req, res) => {
   const { name, author, length, type, id } = req.body;
@@ -58,4 +72,5 @@ module.exports = {
   createMusic,
   deleteMusic,
   updateMusic,
+  getSearchedMusic,
 };
